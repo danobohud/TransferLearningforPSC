@@ -8,8 +8,6 @@ import numpy as np
 from sklearn import metrics
 from sklearn.cluster import KMeans
 
-# Map from onehot encoding to index
-
 def get_label(onehot):
     out = []
     for l in range(len(onehot)):
@@ -26,9 +24,9 @@ def process_labels(labels):
 
     return original
 
-# Convert indices to original label
-
 def get_reverse_mapping(onehotdict_path):
+    ''' Convert indices to original label'''
+
     dicts = []
     with open(onehotdict_path, 'rb') as f:
         onehotdict = pickle.load(f)
@@ -45,13 +43,14 @@ def convert(labels,dicts):
 
 
 def cluster(feat,labels,num_tasks=False):
+    '''Compute k-means clusters for each of the C,A, T and H tasks. compute homogeneity scores for fingerprints'''
+
     out=[]
     if not num_tasks:
         num_tasks=2
     names = ['Class', 'Architecture', 'Topology', 'Homologous Superfamily']
     print('Computing homogeneity score across %s instances:'%(len(feat)))
     for task in range(num_tasks):
-        # label = get_label(labels[task])
         est = KMeans(init='k-means++', n_clusters=len(np.unique(labels[task])), n_init=10)
         est.fit(feat, labels[task])
         print('{}: {:.2f}%'.format(names[task], metrics.homogeneity_score(labels[task], est.labels_) * 100))
@@ -60,11 +59,12 @@ def cluster(feat,labels,num_tasks=False):
     return out
 
 def add_centroids(feat,true_labels,predicted_labels,name=False,num_tasks=False):
+    '''Concatenate data and cluster centroids'''
+
     clusters = cluster(feat, true_labels,num_tasks)
     feat = np.concatenate([feat, clusters[0]])
     if not name:
         name=''
-
     for i in range(4):
         true_labels[i] = np.concatenate([true_labels[i], ['centroid_C_'+name] * len(clusters[0])])
         predicted_labels[i] = np.concatenate([predicted_labels[i], ['centroid_C'] * len(clusters[0])])
@@ -72,6 +72,7 @@ def add_centroids(feat,true_labels,predicted_labels,name=False,num_tasks=False):
     return feat,true_labels,predicted_labels
 
 def process_features_labels(input_npz,dicts,centroids=False,name=None,num_tasks=False):
+    '''Prepare protein fingerprints and centroids for tSNE'''
     print('\nLoading from',input_npz)
     upload = np.load(input_npz, allow_pickle=True)['features_labels_predicted']
     feat = upload[0]
@@ -90,15 +91,16 @@ def process_features_labels(input_npz,dicts,centroids=False,name=None,num_tasks=
     return feat,converted,converted_ypred
 
 def tSNE(features):
+    '''Transform features into two dimensions'''
     print('\nApplying t-SNE to %s vectors' % (len(features)))
     tsne = TSNE(perplexity=3, n_components=2, init='pca', n_iter=250, method='exact')
     np.set_printoptions(suppress=True)
-    T = pd.DataFrame(tsne.fit_transform(features))  # Transform feature vectors into 2D
+    T = pd.DataFrame(tsne.fit_transform(features))
     return T
 
 
 def get_featuremap(T,true_labels,predicted_labels, save_directory, descriptor,print_testplots=False):
-
+    '''Plot clusters for each task and label with true and (optionally) predicted labels'''
     names = ['Class', 'Architecture', 'Topology', 'Homology']
     print('\nTrue labels')
 
@@ -108,7 +110,6 @@ def get_featuremap(T,true_labels,predicted_labels, save_directory, descriptor,pr
 
         name = names[i]
         print(name)
-
         T['original'] = true_labels[i]
         plt.figure(figsize=(14, 8))
         for l in np.unique(T['original'].values):
@@ -155,7 +156,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     input_npz=args.input_file
-
     onehotdict_path = 'CATHonehot.pickle'
     save_directory = 'Plots/'
     if not os.path.isdir(save_directory):
@@ -173,5 +173,3 @@ if __name__ == '__main__':
     tsne=tSNE(feat)
     descriptor = input_npz.split('/')[-1][:-4]
     get_featuremap(tsne, converted, converted_ypred,save_directory,descriptor,get_testplots)
-
-    # Features/20200825_1423_densenet121_HRCA_TRAINTEST_PFP.npz

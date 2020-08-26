@@ -215,21 +215,30 @@ def save_results(baseline, ypred_new,save_f1=False):
 
 
 def run_model(input_file, save_f1=False,
-              batch_size=False):
+              batch_size=False, select_ensemble=False):
+
+    if not select_ensemble:
+        ensemble='e2'
+    else:
+        ensemble=select_ensemble
     savedir=os.getcwd()
     inputs = load_traintest(input_file)
     print('Intialising')
     baseline = BaseLine(inputs, savedir, input_file, batch_size)  # Initialise model
     print('Building model')
     baseline.build()
-    loadfiles = [os.path.join(savedir, x) for x in
-                 ['HRBB_BEST_150.ckpt', 'HRBB_NORM_BEST_150.ckpt', 'HRCA_BEST_150.ckpt', 'HRHEAVY_BEST_150.ckpt']]
+    if ensemble=='e2':
+        loadfiles = [os.path.join(savedir, x) for x in
+                     ['HRBB_BEST_150.ckpt', 'HRBB_NORM_BEST_150.ckpt', 'HRCA_BEST_150.ckpt', 'HRHEAVY_BEST_150.ckpt']]
+    elif ensemble =='e1':
+        loadfiles = [os.path.join(savedir, x) for x in
+                     ['HRBB_BEST_150.ckpt', 'HRCA_BEST_150.ckpt', 'HRHEAVY_BEST_150.ckpt']]
+    else:
+        print('Error, please select an ensemble from "e1" or "e2"')
+
     ypred_new = ensemble_prediction(baseline, loadfiles)
     save_results(baseline, ypred_new,save_f1)
     print('\nComplete')
-
-
-# %% Run from command line
 
 if __name__ == '__main__':
     # Handle command line options
@@ -240,7 +249,11 @@ if __name__ == '__main__':
                         help='output file for test F1 scores')
     parser.add_argument('-b', '--batch_size', required=False, type=int,
                         help='Batch size')
-
+    parser.add_argument('-e', '--select_ensemble', required=False, type=str,
+                        help='Select E1 or E2')
     args = parser.parse_args()
 
-    run_model(args.input_file, args.save_f1, args.batch_size)
+
+    if args.select_ensemble not in ['e1','e2']:
+        print('Error, please select one of "e1","e2"')
+    run_model(args.input_file, args.save_f1, args.batch_size,args.select_ensemble)

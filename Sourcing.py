@@ -1,24 +1,8 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Aug 19 14:18:40 2020
-
-@author: danbot
-"""
-
-# %% Import libraries
-
 import os, math, argparse,requests,cv2
 import numpy as np
 from prody import *
 from Helpers import parallelise, load_pickle
 from zipfile import BadZipFile
-
-# Dependencies: clint, pdb2pqr, propka
-
-# %% Helper functions
-
-
 
 def prepare_directories(atom_selection, root=False):
     '''Create directory tree for source files'''
@@ -207,7 +191,7 @@ def run_preprocess(atom_selection,size):
         if not os.path.isdir(outpath):
             os.mkdir(outpath)
         outfiles=[f[:-4] for f in os.listdir(outpath) if f[-4:]=='.npz']
-        files=[f2 for f2 in domains[i] if f2 not in outfiles]
+        files=[f2 for f2 in domains[i] if f2 not in outfiles][:500]
         preprocess(files,*[raw,outpath,CATHdict,size])
     print('Complete')
 
@@ -217,7 +201,7 @@ def run(directories, pdb2pqr_path, atom_selection,size):
     files = [file for file in os.listdir(dompdb) if file[-4:] == '.pdb' and file[:7] not in pqrs]
     pqr_args = [dompdb, pqr, pdb2pqr_path]
     print('Processing %s PDB files with PDB2PQR and saving to %s' % (len(files), pqr))
-    # parallelise(make_pqr, files, pqr_args)
+    parallelise(make_pqr, files, pqr_args)
     imgs = [file for file in os.listdir(raw) if file[-4:] == '.npz']
     parse_args = [pqr, raw, atom_selection]
     pqrs = [file for file in os.listdir(pqr) if file[-4:] == '.pqr' and file not in imgs]
@@ -240,11 +224,6 @@ if __name__ == '__main__':
                         help='The size of the processed images')
 
     args = parser.parse_args()
-
-    # if not args.pdb2pqr_path:
-    #     pdb2pqr_path = '/Applications/apbs-3.0.0/pdb2pqr/pdb2pqr.py'
-    # else:
-    #     pdb2pqr_path = args.pdb2pqr_path
 
     atom_selection = args.atom_selection
     valid = ['ca', 'bb', 'heavy']

@@ -10,7 +10,7 @@ def load_npz(path):
 
     data=[]
     labels=[]
-    files = shuffle([file for file in os.listdir(path) if file[-4:]=='.npz'],random_state=42)[:1000]
+    files = shuffle([file for file in os.listdir(path) if file[-4:]=='.npz'],random_state=42)
     print('Loading {} files from {}\n'.format(len(files), path))
     n = 1
     for file in files:
@@ -185,15 +185,14 @@ if __name__=='__main__':
 
     args = parser.parse_args()
 
-    # data,labels,domains=load_npz(args.input_folder)
+    data,labels,domains=load_npz(args.input_folder)
     dir=args.input_folder.split('/')
     outpath=os.path.join(*dir[:-1])+'/%s%s_ALL.h5'%(dir[-1],dir[-3].upper())
-    # save_data(outpath,data,labels,domains)
-    # data,cath,domains = load_data(outpath)
+    save_data(outpath,data,labels,domains)
+    data,cath,domains = load_data(outpath)
     onehotdict=load_pickle('CATHonehot.pickle')
-    # labels, nums = one_hot(cath,onehotdict)
-    # traintest = train_test(data, labels, domains, nums, args.test_ratio)
+    labels, nums = one_hot(cath,onehotdict)
+    traintest = train_test(data, labels, domains, nums, args.test_ratio)
     savepath= os.path.join(*dir[:-1])+'/%s%s_TRAINTEST.h5'%(dir[-1],dir[-3].upper())
-    # save_traintest(savepath,traintest)
+    save_traintest(savepath,traintest)
     data = load_traintest(savepath)
-    print(data[1])

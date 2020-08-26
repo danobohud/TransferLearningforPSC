@@ -22,11 +22,11 @@ url = {https://arxiv.org/abs/2008.04757},
 
 This folder contains 6 executable files:
 - Sourcing.py: creates input images for a given atom selection from input .pdb
--Traintest.py: identifies domain subsets for HR, LR or NMR subsets, reshapes matrices and saves to the working directory as .h5 files
--DenseNet121.py trains DenseNet121 on training data, and/or evaluates on test data
--Ensemble.py evaluates weighted ensemble of four DenseNet 121 models on test data
--GetPFP.py Computes homogeneity score and generates t-SNE plots of protein fingerprints (PFPs)
--GetHistory.py Prints training history and computes maximum training and validation accuracies from loss /accuracy over all epochs
+- Traintest.py: identifies domain subsets for HR, LR or NMR subsets, reshapes matrices and saves to the working directory as .h5 files
+- DenseNet121.py trains DenseNet121 on training data, and/or evaluates on test data
+- Ensemble.py evaluates weighted ensemble of four DenseNet 121 models on test data
+- GetPFP.py Computes homogeneity score and generates t-SNE plots of protein fingerprints (PFPs)
+- GetHistory.py Prints training history and computes maximum training and validation accuracies from loss /accuracy over all epochs
 
 The following additional files are included in the folder:
 -AMBER.dat / AMBER.names forcefield specifications for ABS-PDB2PQR (see below)

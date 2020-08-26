@@ -22,7 +22,7 @@ url = {https://arxiv.org/abs/2008.04757},
 
 1. OVERVIEW
 
-This folder contains 6 executable files:
+This folder contains six executable files:
 - Sourcing.py: creates input images for a given atom selection from input .pdb
 - Traintest.py: identifies domain subsets for HR, LR or NMR subsets, reshapes matrices and saves to the working directory as .h5 files
 - DenseNet121.py trains DenseNet121 on training data, and/or evaluates on test data
@@ -44,7 +44,7 @@ The following additional files are included in the folder:
 	- 	CATH/ca/preprocessed/HRCA_TRAINTEST.h5.zip (.h5 HR dataset)
 	- 	CATH/ca/preprocessed/LRCA_TRAINTEST.h5.zip (.h5 LR dataset)
 	- 	CATH/ca/preprocessed/NMRCA_TRAINTEST.h5.zip (.h5 NMR dataset)
-
+- Helpers.py Helper functions for executable files
 ** Available on request: 4 .ckpt files containing pre-trained DenseNet121 weights, required for Ensemble.py. Please contact a.o.hudson@se18.qmul.ac.uk for further information.
 
 2. EXECUTABLE FILES

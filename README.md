@@ -1,6 +1,6 @@
-Readme to accompany “Transfer Learning for Protein Structure Classification at Low Resolution’, an MSc dissertation prepared by Alexander Hudson at Queen Mary University of London (QMUL) under the supervision of Professor Shaogang Gong.
+“Transfer Learning for Protein Structure Classification at Low Resolution’, an MSc dissertation prepared by Alexander Hudson at Queen Mary University of London (QMUL) under the supervision of Professor Shaogang Gong.
 
-A version of the paper is available at https://arxiv.org/abs/2008.04757
+A version of the original paper is available at https://arxiv.org/abs/2008.04757
 
 Please cite use of this resource as below:
 

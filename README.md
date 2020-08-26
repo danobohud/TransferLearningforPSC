@@ -41,9 +41,9 @@ The following additional files are included in the folder:
 	-	CATH/ca/preprocessed/HR.zip (.npz HR processed images)
 	-	CATH/ca/preprocessed/NMR.zip (.npz LR processed images)
 	-	CATH/ca/preprocessed/LR.zip (.npz NMR processed images)
-	- 	CATH/ca/preprocessed/HRCA_TRAINTEST.h5 (.h5 HR dataset)
-	- 	CATH/ca/preprocessed/LRCA_TRAINTEST.h5 (.h5 LR dataset)
-	- 	CATH/ca/preprocessed/NMRCA_TRAINTEST.h5 (.h5 NMR dataset)
+	- 	CATH/ca/preprocessed/HRCA_TRAINTEST.h5.zip (.h5 HR dataset)
+	- 	CATH/ca/preprocessed/LRCA_TRAINTEST.h5.zip (.h5 LR dataset)
+	- 	CATH/ca/preprocessed/NMRCA_TRAINTEST.h5.zip (.h5 NMR dataset)
 
 ** Available on request: 4 .ckpt files containing pre-trained DenseNet121 weights, required for Ensemble.py. Please contact a.o.hudson@se18.qmul.ac.uk for further information.
 
@@ -161,11 +161,11 @@ For example:
 2.5 Ensemble.py
 
 This program takes as its input preprocessed image files and associated labels, uses a weighted ensemble of pre-trained DenseNet121 models to make predictions from the inputs, and evaluates performance of the ensemble.
-To run the model, you must select the input file and (optionally) save performance in Results/f1.csv. You can also alter the run speed of the evaluation to suit the memory capacity of your system by selecting the batch-size (default = 32). 
+To run the model, you must select the input file and (optionally) save performance in Results/f1.csv. You can also (optionally) alter the run speed of the evaluation to suit the memory capacity of your system by selecting the batch-size (default = 32), and select from ensembles E1 and E2 (default = E2, see paper for further details).  
 
 For example:
 
-“python Ensemble.py -i CATH/ca/preprocessed/HRCA_TRAINTEST.h5 -f1 True -b 16”
+“python Ensemble.py -i CATH/ca/preprocessed/HRCA_TRAINTEST.h5 -f1 True -b 16 -e e1”
 
 NB: For this model to run properly, you will need to request the learned model weights from a.o.hudson@se18.qmul.ac.uk.
 

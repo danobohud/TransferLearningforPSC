@@ -29,9 +29,9 @@ This folder contains 6 executable files:
 - GetHistory.py Prints training history and computes maximum training and validation accuracies from loss /accuracy over all epochs
 
 The following additional files are included in the folder:
--AMBER.dat / AMBER.names forcefield specifications for ABS-PDB2PQR (see below)
--CATHdict.pickle: a dictionary mapping domain names to their associated CATH label and auxiliary information: PDB ID; chain; resolution; enzyme classification; experimental methodology; category and sequence)
--CATHonehot.pickle: a dictionary mapping CATH labels to a one hot index
+- AMBER.dat / AMBER.names forcefield specifications for ABS-PDB2PQR (see below)
+- CATHdict.pickle: a dictionary mapping domain names to their associated CATH label and auxiliary information: PDB ID; chain; resolution; enzyme classification; experimental methodology; category and sequence)
+- CATHonehot.pickle: a dictionary mapping CATH labels to a one hot index
 - Dummy data files (random example instances):
 	-	dompdb.zip (.pdb structure files)
 	-	CATH/PQR.zip (.pqr structure files)
@@ -142,19 +142,19 @@ To run the model:
 	- Specify the input file (-i) and the number of epochs (-e). For evaluation only, select 0 epochs. 
 
 - Optional parameters: 
-	-b (batch size, default = 32); 
-	-o (output layer size, default = 512); 
-	-lr (learning rate, default = 0.001)
-	-lf (load weights from pre-trained model); 
-	-r (save accuracy to Results/results.csv); 
-	-f1 (save F1 to Results/F1.csv); 
-	-ch (save model checkpoints every 10 epochs);
-	-fr (freeze all non-custom layers);
-	-pf (save protein fingerprints to Features folder)
+	- b (batch size, default = 32); 
+	- o (output layer size, default = 512); 
+	- lr (learning rate, default = 0.001)
+	- lf (load weights from pre-trained model); 
+	- r (save accuracy to Results/results.csv); 
+	- f1 (save F1 to Results/F1.csv); 
+	- ch (save model checkpoints every 10 epochs);
+	- fr (freeze all non-custom layers);
+	- pf (save protein fingerprints to Features folder)
 
 For example:
 
-“ python DenseNet121.py -i CATH/ca/preprocessed/HRCA_TRAINTEST.h5 -e 10 -b 16 -lr 0.002 -o 128 -r True -f1 True -ch True -pf True”
+“python DenseNet121.py -i CATH/ca/preprocessed/HRCA_TRAINTEST.h5 -e 10 -b 16 -lr 0.002 -o 128 -r True -f1 True -ch True -pf True”
 
 2.5 Ensemble.py
 

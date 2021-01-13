@@ -191,7 +191,7 @@ def run_preprocess(atom_selection,size):
         if not os.path.isdir(outpath):
             os.mkdir(outpath)
         outfiles=[f[:-4] for f in os.listdir(outpath) if f[-4:]=='.npz']
-        files=[f2 for f2 in domains[i] if f2 not in outfiles][:500]
+        files=[f2 for f2 in domains[i] if f2 not in outfiles]
         preprocess(files,*[raw,outpath,CATHdict,size])
     print('Complete')
 

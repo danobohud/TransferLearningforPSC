@@ -45,7 +45,7 @@ The following additional files are included in the folder:
 	- 	CATH/ca/preprocessed/LRCA_TRAINTEST.h5.zip (.h5 LR dataset)
 	- 	CATH/ca/preprocessed/NMRCA_TRAINTEST.h5.zip (.h5 NMR dataset)
 - Helpers.py Helper functions for executable files
-** Available on request: 4 .ckpt files containing pre-trained DenseNet121 weights, required for Ensemble.py. Please contact a.o.hudson@se18.qmul.ac.uk for further information.
+** Available on request: 4 .ckpt files containing pre-trained DenseNet121 weights, required for Ensemble.py. Please contact alexander.hudson@dtc.ox.ac.uk for further information.
 
 2. EXECUTABLE FILES
 
@@ -167,7 +167,7 @@ For example:
 
 “python Ensemble.py -i CATH/ca/preprocessed/HRCA_TRAINTEST.h5 -f1 True -b 16 -e e1”
 
-NB: For this model to run properly, you will need to request the learned model weights from a.o.hudson@se18.qmul.ac.uk.
+NB: For this model to run properly, you will need to request the learned model weights from alexander.hudson@dtc.ox.ac.uk.
 
 2.6 GetPFP.py
 
